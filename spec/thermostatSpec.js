@@ -21,13 +21,14 @@ describe("A thermostat", function(){
   });
 
   it("cannot decrease the temperature futher than 10", function(){
-    for(var i = 20; i > 10; i--){
+    for(var i = 20; i >= 10; i--){
       thermostat.down()
     };
     expect(function(){thermostat.down()}).toThrowError("The lowest temperature is 10")
   });
 
   it("Should have a max temp of 25 if power saving mode is on", function(){
+    thermostat.powerSavingOn();
     for(var i = 0; i < 5; i++){
       thermostat.up();
     };
@@ -45,4 +46,31 @@ describe("A thermostat", function(){
       thermostat.up()
     }).toThrowError("Max temperature is 32 when power saving is off");
   });
+
+  it("can reset the temperature to 20", function(){
+    thermostat.up()
+    thermostat.reset()
+    expect(thermostat.temperature).toEqual(20)
+  });
+
+
+  it("shows thermostat is low usage", function(){
+    for(var i = 0; i < 3; i++){
+      thermostat.down();
+    };
+    expect(thermostat.energyUsage()).toEqual("low-usage")
+  });
+
+  it("shows thermostat is medium usage", function(){
+    expect(thermostat.energyUsage()).toEqual("medium-usage")
+  });
+
+  it("shows thermostat is medium usage", function(){
+    thermostat.powerSavingOff();
+    for(var i = 0; i < 9; i++){
+      thermostat.up();
+    };
+    expect(thermostat.energyUsage()).toEqual("high-usage")
+  });
+
 });

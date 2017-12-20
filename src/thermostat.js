@@ -1,9 +1,11 @@
 function Thermostat (){
-  const MIN_TEMP = 10;
+  this.MIN_TEMP = 10;
   this.MAX_TEMP_PS_ON = 25;
   this.MAX_TEMP_PS_OFF = 32;
   this.temperature = 20;
   this.powerSaving = true;
+  this.lowEnergyUsage = 18;
+  this.mediumEnergyUsage = 25;
 };
 
 Thermostat.prototype.powerSavingOn = function(){
@@ -23,6 +25,20 @@ Thermostat.prototype.up = function(){
 };
 
 Thermostat.prototype.down = function(){
-  if (this.temperature === 10){throw Error("The lowest temperature is 10")}
+  if (this.temperature < this.MIN_TEMP){throw Error("The lowest temperature is 10")}
   this.temperature --;
 };
+
+Thermostat.prototype.reset = function(){
+  this.temperature = 20;
+};
+
+Thermostat.prototype.energyUsage = function(){
+
+  if (this.temperature < this.lowEnergyUsage){
+    return ("low-usage");
+  } if (this.temperature >= this.lowEnergyUsage && this.temperature <= this.mediumEnergyUsage){
+    return "medium-usage";
+  }
+    return "high-usage";
+  };
