@@ -8,6 +8,15 @@ function Thermostat (){
   this.mediumEnergyUsage = 25;
 };
 
+Thermostat.prototype.gettingCurrentTemperature = function(){
+  return this.temperature
+};
+
+Thermostat.prototype.isPowerSavingOn = function(){
+  if(this.powerSaving === true){return "On"};
+  if(this.powerSaving === false){return "Off"};
+};
+
 Thermostat.prototype.powerSavingOn = function(){
   this.powerSaving = true;
 };
