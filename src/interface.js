@@ -36,6 +36,24 @@ $( document ).ready(function(){
     thermostat.powerSavingOff()
     $("#power-saving-status").text(thermostat.isPowerSavingOn())
   })
+
+  $('#city_name').submit(function(event){
+    event.preventDefault();
+    var city = $("input:first").val();
+    displayWeather(city);
+  })
+
+  function displayWeather(city){
+    var key = '845a0c872d375a6a3bb9688186425c53';
+    var url = 'http://api.openweathermap.org/data/2.5/weather?q='
+    $.get(url + city +'&appid='+key, function(weather){
+      var temp = Math.round(weather.main.temp - 273.15) + String.fromCharCode(176) + "C"
+      $("#city_name").text(city + " temperature: ")
+      $("#city_temp").text(temp)
+  })
+
+    }
+
   //
   //  $.get("http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=47c1b6aeef267b6a8f2431fad83b01e4", function(weatherLondon){
   //    var temp = Math.round(weatherLondon.main.temp - 273.15) + String.fromCharCode(176) + "C"
@@ -44,14 +62,6 @@ $( document ).ready(function(){
   // })
 
 
-  var city = getElementById("city_name");
-
-
-  $.get(url = 'http://api.openweathermap.org/data/2.5/weather?q='+city+'xinvale&appid=47c1b6aeef267b6a8f2431fad83b01e4', function(weatherLondon){
-    var temp = Math.round(weatherLondon.main.temp - 273.15) + String.fromCharCode(176) + "C"
-    $("#city_name").text(city + "temperature: ")
-    $("#city_temp").text(temp)
- })
 
 
   })
